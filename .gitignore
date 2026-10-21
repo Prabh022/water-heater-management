@@ -1,0 +1,17 @@
+# Build outputs
+*.o
+*.obj
+*.exe
+*.out
+*.ilk
+*.pdb
+water_heater_mgmt
+
+# Runtime data files created by the program (users.csv is shipped on purpose)
+data.csv
+installation.csv
+staging.csv
+
+# IDE files
+.vs/
+.vscode/
