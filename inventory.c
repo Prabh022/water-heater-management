@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "inventory.h"
 
 #define FILE_PATH "data.csv"
@@ -52,6 +53,46 @@ void displayInventory() {
     printf("\nInventory:\nBrand | Type | Serial Number | Quantity\n");
     while (fscanf(file, "%[^,],%[^,],%[^,],%d\n", heater.brand, heater.type, heater.serialNumber, &heater.quantity) != EOF) {
         printf("%s | %s | %s | %d\n", heater.brand, heater.type, heater.serialNumber, heater.quantity);
+    }
+    fclose(file);
+}
+
+static int containsIgnoreCase(const char* text, const char* term) {
+    size_t tlen = strlen(term);
+    if (tlen == 0) return 1;
+    for (const char* p = text; *p; p++) {
+        size_t i = 0;
+        while (i < tlen && p[i] &&
+               tolower((unsigned char)p[i]) == tolower((unsigned char)term[i])) {
+            i++;
+        }
+        if (i == tlen) return 1;
+    }
+    return 0;
+}
+
+void searchInventory() {
+    FILE* file = fopen(FILE_PATH, "r");
+    if (!file) {
+        printf("Error opening inventory file!\n");
+        return;
+    }
+
+    char term[50];
+    printf("Enter brand to search for: ");
+    scanf("%49s", term);
+
+    WaterHeater heater;
+    int found = 0;
+    printf("\nSearch results for \"%s\":\nBrand | Type | Serial Number | Quantity\n", term);
+    while (fscanf(file, "%[^,],%[^,],%[^,],%d\n", heater.brand, heater.type, heater.serialNumber, &heater.quantity) != EOF) {
+        if (containsIgnoreCase(heater.brand, term)) {
+            printf("%s | %s | %s | %d\n", heater.brand, heater.type, heater.serialNumber, heater.quantity);
+            found++;
+        }
+    }
+    if (found == 0) {
+        printf("No water heaters matched \"%s\".\n", term);
     }
     fclose(file);
 }

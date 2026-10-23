@@ -10,6 +10,7 @@ typedef struct {
 
 void addWaterHeater();
 void displayInventory();
+void searchInventory();
 void checkRestockingAlerts();
 void loadInventory();
 void saveInventory();

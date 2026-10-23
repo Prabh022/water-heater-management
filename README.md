@@ -11,7 +11,8 @@ staging tanks for installers — behind a login with two access levels.
   - **Installer (level 2):** view inventory/schedule and see the tanks
     staged for their own crew name
 - Inventory: add a water heater (brand validated against a fixed list),
-  display inventory, low-stock restocking alerts (quantity below 5)
+  display inventory, search inventory by brand (case-insensitive partial
+  match), low-stock restocking alerts (quantity below 5)
 - Installations: schedule an installation and view the schedule
 - Staging: stage a tank for an address/crew and view your staged tanks
 - Data stored in plain CSV files in the working directory

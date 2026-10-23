@@ -33,3 +33,15 @@ installer.
   referenced by any code** (they use different schemas and appear to be
   leftovers from earlier iterations). Left behind; `users.csv` is the
   login file the code actually reads.
+
+## 2026-10-23 — Search inventory by brand
+
+- Added menu option 8, "Search Inventory by Brand" (Exit moved to 9):
+  `searchInventory()` in `inventory.c` prompts for a brand term and prints
+  every inventory row whose brand contains it, using a case-insensitive
+  substring match. Available to both access levels, like Display Inventory.
+  Prints "No water heaters matched" when nothing fits.
+- Verified: compiled with `gcc -std=c11 -Wall -Wextra` (zero warnings).
+  Scripted run as admin against a 3-row inventory (GSW / Rheem / Rinnai):
+  search "rhe" matched only the Rheem row; "rin" matched only Rinnai;
+  "ZZZ" printed the no-match message; Display Inventory unchanged.
