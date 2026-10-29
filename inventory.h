@@ -11,6 +11,7 @@ typedef struct {
 void addWaterHeater();
 void displayInventory();
 void searchInventory();
+void updateInventoryQuantity();
 void checkRestockingAlerts();
 void loadInventory();
 void saveInventory();

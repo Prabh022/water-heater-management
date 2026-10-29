@@ -45,3 +45,21 @@ installer.
   Scripted run as admin against a 3-row inventory (GSW / Rheem / Rinnai):
   search "rhe" matched only the Rheem row; "rin" matched only Rinnai;
   "ZZZ" printed the no-match message; Display Inventory unchanged.
+
+## 2026-10-29 — Update inventory quantity by serial number
+
+- Added menu option 9, "Update Inventory Quantity" (Admin only; Exit
+  moved to 10): `updateInventoryQuantity()` in `inventory.c` prompts for
+  a serial number and a new quantity, then rewrites `data.csv` through a
+  temporary file, changing only the matching row. A negative quantity is
+  rejected before any file is touched; an unknown serial number reports
+  "No water heater found" and leaves the data file untouched. The README
+  menu — which still showed the pre-search numbering — is corrected to
+  the current 1–10 menu.
+- Verified: compiled with `gcc -std=c11 -Wall -Wextra` (zero warnings).
+  Scripted run as admin against a 3-row inventory (GSW/SN001 qty 3,
+  Rheem/SN002 qty 8, Rinnai/SN003 qty 2): updating SN002 to 12 changed
+  only that row; updating unknown serial SN999 changed nothing and
+  printed the no-match message; a negative quantity was rejected with
+  the file unchanged; Display Inventory and restocking alerts still
+  worked afterwards.

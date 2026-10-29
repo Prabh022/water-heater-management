@@ -19,7 +19,8 @@ void menu(int accessLevel, char* username) {
         printf("6. Stage Tanks for Installation\n");
         printf("7. View My Staged Tanks\n");
         printf("8. Search Inventory by Brand\n");
-        printf("9. Exit\nEnter choice: ");
+        printf("9. Update Inventory Quantity\n");
+        printf("10. Exit\nEnter choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
@@ -52,6 +53,10 @@ void menu(int accessLevel, char* username) {
             searchInventory();
             break;
         case 9:
+            if (accessLevel == 1) updateInventoryQuantity();
+            else printf("Access Denied!\n");
+            break;
+        case 10:
             return;
         default:
             printf("Invalid choice!\n");

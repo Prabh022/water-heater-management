@@ -97,6 +97,57 @@ void searchInventory() {
     fclose(file);
 }
 
+void updateInventoryQuantity() {
+    char serial[20];
+    int newQuantity;
+    printf("Enter serial number: ");
+    scanf("%19s", serial);
+    printf("Enter new quantity: ");
+    if (scanf("%d", &newQuantity) != 1) {
+        printf("Invalid quantity!\n");
+        return;
+    }
+    if (newQuantity < 0) {
+        printf("Quantity cannot be negative!\n");
+        return;
+    }
+
+    FILE* file = fopen(FILE_PATH, "r");
+    if (!file) {
+        printf("Error opening inventory file!\n");
+        return;
+    }
+
+    FILE* temp = fopen("data_temp.csv", "w");
+    if (!temp) {
+        printf("Error opening inventory file!\n");
+        fclose(file);
+        return;
+    }
+
+    WaterHeater heater;
+    int found = 0;
+    while (fscanf(file, "%[^,],%[^,],%[^,],%d\n", heater.brand, heater.type, heater.serialNumber, &heater.quantity) != EOF) {
+        if (strcmp(heater.serialNumber, serial) == 0) {
+            heater.quantity = newQuantity;
+            found = 1;
+        }
+        fprintf(temp, "%s,%s,%s,%d\n", heater.brand, heater.type, heater.serialNumber, heater.quantity);
+    }
+    fclose(file);
+    fclose(temp);
+
+    if (!found) {
+        remove("data_temp.csv");
+        printf("No water heater found with serial number %s!\n", serial);
+        return;
+    }
+
+    remove(FILE_PATH);
+    rename("data_temp.csv", FILE_PATH);
+    printf("Quantity updated successfully!\n");
+}
+
 void checkRestockingAlerts() {
     FILE* file = fopen(FILE_PATH, "r");
     if (!file) {

@@ -12,7 +12,8 @@ staging tanks for installers — behind a login with two access levels.
     staged for their own crew name
 - Inventory: add a water heater (brand validated against a fixed list),
   display inventory, search inventory by brand (case-insensitive partial
-  match), low-stock restocking alerts (quantity below 5)
+  match), update an inventory item's quantity by serial number (Admin),
+  low-stock restocking alerts (quantity below 5)
 - Installations: schedule an installation and view the schedule
 - Staging: stage a tank for an address/crew and view your staged tanks
 - Data stored in plain CSV files in the working directory
@@ -51,7 +52,9 @@ Log in with one of the sample accounts, then use the menu:
 5. View Installation Schedule
 6. Stage Tanks for Installation (Admin)
 7. View My Staged Tanks        (Installer)
-8. Exit
+8. Search Inventory by Brand
+9. Update Inventory Quantity   (Admin)
+10. Exit
 ```
 
 The program creates its data files as needed: `data.csv` (inventory),
@@ -79,7 +82,7 @@ House No | Street | City | Postal Code | Date | Tank Type
 
 ```
 main.c          Entry point, login loop, and menu
-inventory.c/.h  Add/display water heaters, restocking alerts
+inventory.c/.h  Add/display/search water heaters, update quantity, restocking alerts
 installation.c/.h  Schedule and display installations
 staging.c/.h    Stage tanks and list a crew's staged tanks
 users.c/.h      Login authentication and access levels
@@ -88,8 +91,8 @@ users.csv       Sample user accounts (username,password,accessLevel)
 
 ## Notes
 
-- This project was extracted from a C projects collection repo; the source
-  code is unchanged (see CHANGES.md).
+- This project was extracted from a C projects collection repo; features
+  added after extraction are listed in CHANGES.md.
 - The original repo's `staging.csv` used an older, incompatible layout and
   was deliberately **not** carried over — see CHANGES.md for the tested
   reason. The program creates a fresh `staging.csv` in its own format the
